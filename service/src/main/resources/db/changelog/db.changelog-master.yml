@@ -1,0 +1,10 @@
+databaseChangeLog:
+    -   include:
+            file: category-table-changelog.yml
+            relativeToChangelogFile: true
+    -   include:
+            file: product-table-changelog.yml
+            relativeToChangelogFile: true
+    -   include:
+            file: product-to-category-changelog.yml
+            relativeToChangelogFile: true

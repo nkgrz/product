@@ -1,0 +1,51 @@
+databaseChangeLog:
+    -   changeSet:
+            id: create-product-table
+            author: nkgrz
+            changes:
+                -   createTable:
+                        tableName: product
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: uuid
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: name
+                                    type: varchar(255)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: description
+                                    type: text
+                            -   column:
+                                    name: price
+                                    type: decimal(10, 2)
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: stock
+                                    type: integer
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: images
+                                    type: jsonb
+                            -   column:
+                                    name: specifications
+                                    type: jsonb
+                            -   column:
+                                    name: created_at
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: updated_at
+                                    type: timestamp
+                                    constraints:
+                                        nullable: false
+                            -   column:
+                                    name: is_active
+                                    type: boolean

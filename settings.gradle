@@ -1,0 +1,4 @@
+rootProject.name = 'product'
+include 'api'
+include 'client'
+include 'service'
