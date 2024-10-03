@@ -1,6 +1,8 @@
 package ru.buynest.product.client;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
@@ -15,33 +17,32 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CategoryClientTest extends ProductApplicationTests {
 
-    private static final String CATEGORY_NAME = "Electronics";
-    private static final String CATEGORY_DESCRIPTION = "Electronic items";
-    private static final Instant CATEGORY_CREATED_AT = Instant.now();
-    private static final String UPDATED_CATEGORY_NAME = "Updated Electronics";
-    private static final String UPDATED_CATEGORY_DESCRIPTION = "Electronic items";
-    private static final UUID CATEGORY_ID = UUID.randomUUID();
+    private final String CATEGORY_NAME = "Electronics";
+    private final String CATEGORY_DESCRIPTION = "Electronic items";
+    private final Instant CATEGORY_CREATED_AT = Instant.now();
+    private final String UPDATED_CATEGORY_NAME = "Updated Electronics";
+    private final String UPDATED_CATEGORY_DESCRIPTION = "Electronic items";
+    private final UUID CATEGORY_ID = UUID.randomUUID();
 
-    private static final SaveOrUpdateCategoryRequest CREATE_CATEGORY_REQUEST = new SaveOrUpdateCategoryRequest(
+    private final SaveOrUpdateCategoryRequest CREATE_CATEGORY_REQUEST = new SaveOrUpdateCategoryRequest(
             CATEGORY_NAME, CATEGORY_DESCRIPTION, null,
             CATEGORY_CREATED_AT, CATEGORY_CREATED_AT);
-    private final static Category CATEGORY = new Category(
-            CATEGORY_ID,
-            CATEGORY_NAME,
-            CATEGORY_DESCRIPTION,
-            null,
-            CATEGORY_CREATED_AT,
-            CATEGORY_CREATED_AT
+    private final Category CATEGORY = new Category(
+            CATEGORY_ID, CATEGORY_NAME, CATEGORY_DESCRIPTION,
+            null, CATEGORY_CREATED_AT, CATEGORY_CREATED_AT
     );
 
     @Autowired
     private TestCategoryDao categoryDao;
 
+    @BeforeEach
+    void before() {
+        categoryDao.deleteAll();
+    }
+
     @Test
-    @Order(1)
     @DisplayName("Should successfully create a category and verify its properties")
     public void shouldCreateCategorySuccessfully() {
         CategoryResponse categoryResponse = categoryClient.createCategory(CREATE_CATEGORY_REQUEST);
@@ -68,7 +69,7 @@ public class CategoryClientTest extends ProductApplicationTests {
 
     @Test
     @DisplayName("Should retrieve category by ID and verify its properties")
-    public void shouldGetCategoriesSuccessfully() {
+    public void shouldGetCategorySuccessfully() {
         categoryDao.upsert(CATEGORY);
         CategoryResponse categoryResponse = categoryClient.getCategoryById(CATEGORY_ID);
         assertCategoryProperties(categoryResponse, CATEGORY_NAME, CATEGORY_DESCRIPTION, CATEGORY_CREATED_AT);
