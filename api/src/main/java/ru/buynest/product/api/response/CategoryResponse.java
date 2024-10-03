@@ -1,6 +1,7 @@
 package ru.buynest.product.api.response;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CategoryResponse {
@@ -69,5 +70,18 @@ public class CategoryResponse {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CategoryResponse that = (CategoryResponse) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(parentCategoryId, that.parentCategoryId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, parentCategoryId);
     }
 }
