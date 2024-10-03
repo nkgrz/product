@@ -3,15 +3,17 @@ package ru.buynest.product.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.buynest.product.api.request.SaveOrUpdateCategoryRequest;
+import ru.buynest.product.api.response.CategoryResponse;
 import ru.buynest.product.dao.CategoryDao;
 import ru.buynest.product.exception.category.CategoryExistException;
 import ru.buynest.product.exception.category.CategoryNotFoundException;
 import ru.buynest.product.model.Category;
-import ru.buynest.product.api.request.SaveOrUpdateCategoryRequest;
-import ru.buynest.product.api.response.CategoryResponse;
 
 import java.util.Optional;
 import java.util.UUID;
+
+import static ru.buynest.product.service.converter.CategoryConverter.categoryToCategoryResponse;
 
 @Service
 public class CategoryService {
@@ -59,15 +61,6 @@ public class CategoryService {
     public CategoryResponse getCategoryById(UUID categoryId) {
         Category category = getCategoryByIdOrThrow(categoryId);
         return categoryToCategoryResponse(category);
-    }
-
-    private CategoryResponse categoryToCategoryResponse(Category category) {
-        return new CategoryResponse(category.getId(),
-                category.getName(),
-                category.getDescription(),
-                category.getParentCategoryId(),
-                category.getCreatedAt(),
-                category.getUpdatedAt());
     }
 
     private Category getCategoryByIdOrThrow(UUID categoryId) {
