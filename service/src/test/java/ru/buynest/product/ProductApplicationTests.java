@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import ru.buynest.product.client.ApiClientAutoConfiguration;
 import ru.buynest.product.client.ApiClientProperties;
 import ru.buynest.product.client.CategoryClient;
+import ru.buynest.product.client.ProductClient;
 
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -16,6 +17,7 @@ import ru.buynest.product.client.CategoryClient;
 public class ProductApplicationTests {
 
     protected CategoryClient categoryClient;
+    protected ProductClient productClient;
 
     @LocalServerPort
     private int port;
@@ -32,5 +34,6 @@ public class ProductApplicationTests {
         RestTemplate restTemplate = apiClientAutoConfiguration.restTemplate(apiClientProperties);
 
         categoryClient = apiClientAutoConfiguration.categoryClient(restTemplate);
+        productClient = apiClientAutoConfiguration.productClient(restTemplate);
     }
 }
