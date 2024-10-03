@@ -19,7 +19,7 @@ public class CategoryClient {
     }
 
     /**
-     * POST /categories/
+     * POST /categories
      */
     public CategoryResponse createCategory(SaveOrUpdateCategoryRequest requestEntity) {
         return restTemplate.postForObject(CATEGORY_URL, requestEntity, CategoryResponse.class);
