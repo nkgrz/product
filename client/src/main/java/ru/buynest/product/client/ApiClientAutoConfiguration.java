@@ -25,4 +25,11 @@ public class ApiClientAutoConfiguration {
     public CategoryClient categoryClient(RestTemplate restTemplate) {
         return new CategoryClient(restTemplate);
     }
+
+    @Bean
+    @ConditionalOnMissingBean(ProductClient.class)
+    public ProductClient productClient(RestTemplate restTemplate) {
+        return new ProductClient(restTemplate);
+    }
+
 }
